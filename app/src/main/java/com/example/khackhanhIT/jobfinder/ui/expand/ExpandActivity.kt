@@ -6,7 +6,7 @@ import com.example.khackhanhIT.jobfinder.R
 import com.example.khackhanhIT.jobfinder.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_expand.*
 
-class ExpandActivity: BaseActivity() {
+class ExpandActivity: BaseActivity() { // hien thi item tren layout
     override fun layoutRes(): Int {
         return R.layout.activity_expand
     }

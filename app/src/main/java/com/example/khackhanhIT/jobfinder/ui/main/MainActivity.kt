@@ -33,13 +33,12 @@ class MainActivity: BaseActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
 
-
     override fun layoutRes(): Int {
         return R.layout.activity_main
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { // set layout xu ly
         super.onCreate(savedInstanceState)
 
 
@@ -51,8 +50,8 @@ class MainActivity: BaseActivity() {
 
         }
 
-        addProiverSpinner()
-        addPostionSpinner()
+        addProiverSpinner() // thêm drop downlist cho cái phía github
+        addPostionSpinner() // thêm dropDownList cho cái full time và contact
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
@@ -78,12 +77,12 @@ class MainActivity: BaseActivity() {
 
     }
 
-    private fun addProiverSpinner() {
+    private fun addProiverSpinner() { // khoi tao va xy ly khi chon down list (github)
         val adapter =
             ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                resources.getStringArray(R.array.jobProviders)
+                resources.getStringArray(R.array.jobProviders) //github or GOV
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_provider.adapter = adapter
@@ -101,7 +100,7 @@ class MainActivity: BaseActivity() {
         }
     }
 
-    private fun addPostionSpinner() {
+    private fun addPostionSpinner() { // khoi tao va xu ly khi chon down list (fulltime)
         val adapter =
             ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.position))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -120,9 +119,9 @@ class MainActivity: BaseActivity() {
         }
     }
 
-    private fun getRequiredParameters() {
+    private fun getRequiredParameters() { // lay params nhap vao o 2 o search & location
 
-        if (!search_view.text.trim().isEmpty()) {
+        if (!search_view.text.trim().isEmpty()) { // kiem tra va lay parametor
             description = search_view.text.toString()
             query = description
 
@@ -139,12 +138,12 @@ class MainActivity: BaseActivity() {
         }
 
         Log.e("check:", "$provider, $query, $description, $location, $jobPosition")
-        searchViewmodel()
+        searchViewmodel() // query data
 
 
     }
 
-    private fun searchViewmodel() {
+    private fun searchViewmodel() { //query data, truyen data cho cai thang recycler view
         if (NetworkUtility.isNetworkConnected(this)) {
             search_and_filter.visibility = View.VISIBLE
             no_network.visibility = View.GONE
@@ -156,7 +155,7 @@ class MainActivity: BaseActivity() {
                         Toast.makeText(this, "No item found", Toast.LENGTH_SHORT).show()
                         recyclerView.visibility = View.GONE
                     } else {
-                        setValueInRecyclerView(it)
+                        setValueInRecyclerView(it) // set data recycler view
                     }
                 })
         } else {
@@ -170,26 +169,22 @@ class MainActivity: BaseActivity() {
 
     private fun observableViewModel() {
 
-
-
-        viewModel.getJobSearches().observe(this,
+        viewModel.getJobSearches().observe(this,  // fectch  data
             Observer<List<Job>> {
-                setValueInRecyclerView(it!!)
+                setValueInRecyclerView(it!!) // set data to adapter job -> list<job>
             })
 
     }
 
-    private fun setValueInRecyclerView(jobs: List<Job>){
-          no_network.visibility = View.GONE
-          recyclerView.visibility = View.VISIBLE
-          recyclerView.layoutManager = LinearLayoutManager(this)
-          recyclerView.setHasFixedSize(false)
+    private fun setValueInRecyclerView(jobs: List<Job>){ // set data to recycler view
+          no_network.visibility = View.GONE // an no network
+          recyclerView.visibility = View.VISIBLE // show thang recycelview len
+          recyclerView.layoutManager = LinearLayoutManager(this) // tao doi tuong cha chua recycelview
+          recyclerView.setHasFixedSize(false) //
           recyclerView.itemAnimator = DefaultItemAnimator()
-          val jobAdapter = JobsAdapter(this,this,jobs)
+          val jobAdapter = JobsAdapter(this,this,jobs) // set apdapter JobAdapter to recycelview for 1 item in list
           recyclerView.adapter = jobAdapter
           jobAdapter.notifyDataSetChanged()
-
-
 
     }
 

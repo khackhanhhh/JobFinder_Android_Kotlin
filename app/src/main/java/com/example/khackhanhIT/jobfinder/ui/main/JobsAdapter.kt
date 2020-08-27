@@ -39,13 +39,14 @@ class JobsAdapter():
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { // xu ly layout job_item
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.job_item, parent, false))
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) { // hien thi so luong item theo list truyen vao
+        // possion chay tu dau den het list
+        // holder ( boc doi voi moi item, object chua cac doi tuong da khoi tao phia duoi
 
 
 
@@ -87,8 +88,8 @@ class JobsAdapter():
             holder.companyLogo.setImageResource(R.drawable.default_logo)
         }
 
-        holder.cardView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(items[position].url))
+        holder.cardView.setOnClickListener {// mo borwer o github
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(items[position].url)) // start activity moi voi url tu data
             activity.startActivity(intent)
         }
 
@@ -136,7 +137,7 @@ class JobsAdapter():
 
 
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){ // khoi tao cac doi tuong de xu ly
 
 
 
